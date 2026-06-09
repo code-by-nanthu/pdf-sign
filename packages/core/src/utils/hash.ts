@@ -3,8 +3,10 @@
  * Uses the Web Crypto API (available in all modern browsers and Node ≥ 18).
  */
 export async function sha256Hex(data: Uint8Array | ArrayBuffer): Promise<string> {
-  const buffer = data instanceof Uint8Array ? (data.buffer as ArrayBuffer) : data
-  const hashBuffer = await crypto.subtle.digest('SHA-256', buffer)
+  // Copy into a new Uint8Array backed by a plain ArrayBuffer so cross-realm
+  // environments (e.g. jsdom) don't trigger ERR_INVALID_ARG_TYPE.
+  const source: BufferSource = data instanceof Uint8Array ? new Uint8Array(data) : data
+  const hashBuffer = await crypto.subtle.digest('SHA-256', source)
   const hashArray = Array.from(new Uint8Array(hashBuffer))
   return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('')
 }
