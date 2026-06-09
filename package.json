@@ -1,0 +1,34 @@
+{
+  "name": "pdf-sign",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Framework-agnostic PDF e-signature and placeholder package",
+  "scripts": {
+    "build": "pnpm -r --filter='./packages/*' build",
+    "build:core": "pnpm --filter @pdf-sign/core build",
+    "build:vue": "pnpm --filter @pdf-sign/vue build",
+    "build:react": "pnpm --filter @pdf-sign/react build",
+    "build:angular": "pnpm --filter @pdf-sign/angular build",
+    "build:plugin": "pnpm --filter @pdf-sign/tailwind-plugin build",
+    "dev": "pnpm -r --parallel --filter='./packages/*' dev",
+    "test": "pnpm -r --filter='./packages/*' test",
+    "test:watch": "pnpm -r --parallel --filter='./packages/*' test:watch",
+    "lint": "pnpm -r --filter='./packages/*' lint",
+    "typecheck": "pnpm -r --filter='./packages/*' typecheck",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm build && changeset publish",
+    "clean": "pnpm -r --filter='./packages/*' clean && rm -rf node_modules",
+    "docs": "pnpm --filter docs dev"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.1",
+    "typescript": "^5.4.5",
+    "prettier": "^3.2.5"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.1.0"
+}
