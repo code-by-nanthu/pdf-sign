@@ -43,6 +43,18 @@ export { normalisePdfInput } from './utils/pdf-loader.js'
 // ── Theme ───────────────────────────────────────────────────────────────────
 export { injectTheme, removeTheme, generateDefaultTokensCss } from './theme/inject.js'
 
+// ── Renderer ────────────────────────────────────────────────────────────────
+export { PdfRenderer } from './renderer/PdfRenderer.js'
+export { initialisePdfWorker } from './renderer/worker.js'
+export type {
+  PdfRendererOptions,
+  RenderPageResult,
+  ZoomMode,
+  PdfPageProxy,
+  PdfPageViewport,
+  PdfDocumentProxy,
+} from './renderer/PdfRenderer.js'
+
 // ── State stores (exported for framework adapter use) ───────────────────────
 export { FieldStore } from './state/field-store.js'
 export type { AddFieldPayload, UpdateFieldPayload, FieldStoreState } from './state/field-store.js'
