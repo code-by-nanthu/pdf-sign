@@ -70,6 +70,21 @@ export type {
 } from './drag/types.js'
 export { MIN_FIELD_SIZE_PX } from './drag/types.js'
 
+// ── Exporter ─────────────────────────────────────────────────────────────────
+export { PdfExporter } from './export/PdfExporter.js'
+export type { ExportOptions, ExportResult } from './export/PdfExporter.js'
+export { buildAuditLines, renderAuditPage } from './export/audit.js'
+export {
+  dataUrlToBytes,
+  detectImageType,
+  hexToRgb,
+  renderImageField,
+  renderTextField,
+  renderDateField,
+  renderCheckboxField,
+  renderOptionField,
+} from './export/renderers.js'
+
 // ── State stores (exported for framework adapter use) ───────────────────────
 export { FieldStore } from './state/field-store.js'
 export type { AddFieldPayload, UpdateFieldPayload, FieldStoreState } from './state/field-store.js'
