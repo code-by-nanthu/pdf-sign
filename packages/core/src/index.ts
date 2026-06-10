@@ -55,6 +55,21 @@ export type {
   PdfDocumentProxy,
 } from './renderer/PdfRenderer.js'
 
+// ── Drag engine ──────────────────────────────────────────────────────────────
+export { DragEngine } from './drag/DragEngine.js'
+export type {
+  DragEngineOptions,
+  DragEngineEvents,
+  DragEngineEventKey,
+  PaletteDropEvent,
+  FieldMoveEvent,
+  FieldMoveCommitEvent,
+  FieldResizeEvent,
+  FieldResizeCommitEvent,
+  ResizeHandle,
+} from './drag/types.js'
+export { MIN_FIELD_SIZE_PX } from './drag/types.js'
+
 // ── State stores (exported for framework adapter use) ───────────────────────
 export { FieldStore } from './state/field-store.js'
 export type { AddFieldPayload, UpdateFieldPayload, FieldStoreState } from './state/field-store.js'
