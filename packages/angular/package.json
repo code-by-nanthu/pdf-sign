@@ -15,11 +15,13 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
     "clean": "rm -rf dist"
   },
   "peerDependencies": {
     "@angular/core": "^17.0.0",
     "@angular/common": "^17.0.0",
+    "@angular/forms": "^17.0.0",
     "pdfjs-dist": "^4.0.0",
     "pdf-lib": "^1.17.0"
   },
@@ -29,6 +31,7 @@
   "devDependencies": {
     "@angular/core": "^17.3.6",
     "@angular/common": "^17.3.6",
+    "@angular/forms": "^17.3.6",
     "tsup": "^8.0.2",
     "typescript": "^5.4.5"
   }
