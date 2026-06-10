@@ -9,6 +9,7 @@ export { default as FieldPalette } from './components/FieldPalette.vue'
 export { default as FieldOverlay } from './components/FieldOverlay.vue'
 export { default as FieldChip } from './components/FieldChip.vue'
 export { default as ToolBar } from './components/ToolBar.vue'
+export { default as FieldPropertiesPanel } from './components/FieldPropertiesPanel.vue'
 export { default as SignatureModal } from './components/SignatureModal.vue'
 
 // Composables

@@ -30,6 +30,7 @@ import ToolBar from './ToolBar.vue'
 import PdfViewer from './PdfViewer.vue'
 import FieldPalette from './FieldPalette.vue'
 import SignatureModal from './SignatureModal.vue'
+import FieldPropertiesPanel from './FieldPropertiesPanel.vue'
 
 // ── Props ─────────────────────────────────────────────────────────────────
 
@@ -143,6 +144,10 @@ const pendingSignatureFieldId = ref<string | null>(null)
 const completedFieldIds = ref<string[]>([])
 
 const displaySigners = computed(() => controllerSigners.value)
+
+const selectedField = computed(
+  () => fields.value.find((f) => f.id === selectedFieldId.value) ?? null,
+)
 
 // ── Drag engine ───────────────────────────────────────────────────────────
 
@@ -331,6 +336,19 @@ function onDecline() {
     timestamp: new Date().toISOString(),
   })
 }
+
+function onFieldUpdate(payload: { id: string; changes: Partial<Omit<FieldDef, 'id'>> }) {
+  updateField({ id: payload.id, changes: payload.changes })
+}
+
+function onPanelDelete(fieldId: string) {
+  deleteField(fieldId)
+  selectedFieldId.value = null
+}
+
+function onPanelClose() {
+  selectedFieldId.value = null
+}
 </script>
 
 <template>
@@ -392,6 +410,16 @@ function onDecline() {
         @field-select="onFieldSelect"
         @field-delete="onFieldDelete"
         @zoom-change="(_s) => {}"
+      />
+
+      <!-- Field properties panel (prepare mode, field selected) -->
+      <FieldPropertiesPanel
+        v-if="props.mode === 'prepare'"
+        :field="selectedField"
+        :signers="displaySigners"
+        @update="onFieldUpdate"
+        @delete="onPanelDelete"
+        @close="onPanelClose"
       />
 
       <!-- Sign-mode side panel -->
