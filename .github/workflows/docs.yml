@@ -1,0 +1,48 @@
+name: Deploy docs
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm install
+
+      - run: pnpm build
+        working-directory: packages/core
+
+      - run: pnpm build
+        working-directory: packages/tailwind-plugin
+
+      - run: pnpm build
+        working-directory: packages/vue
+
+      - run: pnpm build
+        working-directory: packages/react
+
+      - run: pnpm build
+        working-directory: packages/angular
+
+      - run: pnpm --filter docs build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/dist

@@ -20,6 +20,7 @@ const config: StorybookConfig = {
   viteFinal(config) {
     return {
       ...config,
+      base: '/pdf-sign/',
       optimizeDeps: {
         ...config.optimizeDeps,
         include: [
