@@ -1,6 +1,6 @@
 {
   "name": "@pdf-sign/tailwind-plugin",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Tailwind CSS v3 + v4 plugin for @pdf-sign — registers psign-* token utilities",
   "type": "module",
   "exports": {
@@ -15,7 +15,9 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup && node scripts/build-css.mjs",
     "dev": "tsup --watch",
@@ -25,7 +27,9 @@
     "tailwindcss": ">=3.0.0"
   },
   "peerDependenciesMeta": {
-    "tailwindcss": { "optional": true }
+    "tailwindcss": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@types/node": "^20.12.7",

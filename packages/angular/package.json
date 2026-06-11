@@ -1,6 +1,6 @@
 {
   "name": "@pdf-sign/angular",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Angular 17+ components for @pdf-sign",
   "type": "module",
   "exports": {
@@ -11,7 +11,9 @@
   },
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",

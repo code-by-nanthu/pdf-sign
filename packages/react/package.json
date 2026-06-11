@@ -1,6 +1,6 @@
 {
   "name": "@pdf-sign/react",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "React 18+ components for @pdf-sign",
   "type": "module",
   "exports": {
@@ -14,7 +14,9 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",

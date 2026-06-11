@@ -1,6 +1,6 @@
 {
   "name": "@pdf-sign/vue",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Vue 3 components for @pdf-sign",
   "type": "module",
   "exports": {
@@ -14,7 +14,9 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build && vue-tsc --emitDeclarationOnly && cp ../tailwind-plugin/dist/base.css dist/",
     "dev": "vite build --watch",
@@ -29,7 +31,9 @@
     "tailwindcss": ">=3.0.0"
   },
   "peerDependenciesMeta": {
-    "tailwindcss": { "optional": true }
+    "tailwindcss": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@pdf-sign/core": "workspace:*"

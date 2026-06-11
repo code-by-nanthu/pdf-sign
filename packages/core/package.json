@@ -1,6 +1,6 @@
 {
   "name": "@pdf-sign/core",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Headless PDF sign core — state, rendering, drag, export. Zero framework.",
   "type": "module",
   "exports": {
@@ -18,7 +18,9 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
@@ -33,8 +35,12 @@
     "pdfjs-dist": "^4.0.0"
   },
   "peerDependenciesMeta": {
-    "pdfjs-dist": { "optional": false },
-    "pdf-lib": { "optional": false }
+    "pdfjs-dist": {
+      "optional": false
+    },
+    "pdf-lib": {
+      "optional": false
+    }
   },
   "devDependencies": {
     "@pdf-lib/fontkit": "^1.1.1",
