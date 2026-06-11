@@ -2,9 +2,19 @@
   "name": "pdf-sign",
   "private": true,
   "version": "0.0.0",
-  "description": "Framework-agnostic PDF e-signature and placeholder package",
+  "description": "Framework-agnostic PDF e-signature and field-placement library for Vue 3, React 18+, and Angular 17+",
   "author": "code-by-nanthu",
   "homepage": "https://code-by-nanthu.github.io/pdf-sign",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/code-by-nanthu/pdf-sign.git"
+  },
+  "license": "MIT",
+  "workspaces": [
+    "packages/*",
+    "docs",
+    "tooling"
+  ],
   "scripts": {
     "build": "pnpm -r --filter='./packages/*' build",
     "build:core": "pnpm --filter @pdf-sign/core build",
@@ -29,8 +39,6 @@
     "prettier": "^3.2.5"
   },
   "engines": {
-    "node": ">=18.0.0",
-    "pnpm": ">=9.0.0"
-  },
-  "packageManager": "pnpm@9.1.0"
+    "node": ">=18.0.0"
+  }
 }

@@ -4,7 +4,6 @@
 
 [![Core tests](https://img.shields.io/badge/core%20tests-220%20passing-22c55e?style=flat-square)](packages/core)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?style=flat-square&logo=typescript&logoColor=white)](tsconfig.base.json)
-[![pnpm](https://img.shields.io/badge/pnpm-9+-orange?style=flat-square&logo=pnpm&logoColor=white)](https://pnpm.io)
 [![Node](https://img.shields.io/badge/node-18+-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 
@@ -35,13 +34,31 @@ Everything runs **in the browser** — no backend, no cloud, no SaaS dependency.
 
 ---
 
+## Installing in your project
+
+Once published to npm, install with **any** package manager:
+
+```bash
+# npm
+npm install @pdf-sign/vue pdfjs-dist pdf-lib
+
+# yarn
+yarn add @pdf-sign/vue pdfjs-dist pdf-lib
+
+# bun
+bun add @pdf-sign/vue pdfjs-dist pdf-lib
+
+# pnpm
+pnpm add @pdf-sign/vue pdfjs-dist pdf-lib
+```
+
+Replace `@pdf-sign/vue` with `@pdf-sign/react` or `@pdf-sign/angular` as needed.
+
+---
+
 ## Quick start
 
 ### Vue 3
-
-```bash
-pnpm add @pdf-sign/vue @pdf-sign/tailwind-plugin pdfjs-dist pdf-lib
-```
 
 ```ts
 // main.ts
@@ -74,20 +91,12 @@ createApp(App).use(PdfSignPlugin).mount('#app')
 
 ### React 18+
 
-```bash
-pnpm add @pdf-sign/react @pdf-sign/tailwind-plugin pdfjs-dist pdf-lib
-```
-
 ```tsx
 import '@pdf-sign/react/base.css'
 import { PdfSigner } from '@pdf-sign/react'
 
 // Prepare mode
-<PdfSigner
-  pdf={myFile}
-  mode="prepare"
-  onTemplateReady={saveTemplate}
-/>
+<PdfSigner pdf={myFile} mode="prepare" onTemplateReady={saveTemplate} />
 
 // Sign mode
 <PdfSigner
@@ -100,10 +109,6 @@ import { PdfSigner } from '@pdf-sign/react'
 ```
 
 ### Angular 17+
-
-```bash
-pnpm add @pdf-sign/angular @pdf-sign/tailwind-plugin pdfjs-dist pdf-lib
-```
 
 ```ts
 // app.component.ts
@@ -143,7 +148,7 @@ export class AppComponent { }
 
 ### Drag engine
 
-Built entirely on the [Pointer Events API](https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events) — no interact.js, no jQuery, no touch-specific handlers. Mouse, stylus, and touch all use the same path.
+Built entirely on the [Pointer Events API](https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events) — no interact.js, no jQuery, no touch-specific handlers. Mouse, stylus, and touch all use the same code path.
 
 - **Palette → canvas** drag-to-place
 - **Move** placed fields with pixel precision
@@ -152,8 +157,6 @@ Built entirely on the [Pointer Events API](https://developer.mozilla.org/en-US/d
 - **Undo / redo** (50-step history)
 
 ### Signature capture
-
-Three methods, all produce a base64 PNG:
 
 | Tab | How it works |
 |-----|-------------|
@@ -173,15 +176,14 @@ Powered by [pdf-lib](https://pdf-lib.js.org):
 
 ### Theming
 
-Every colour, radius, shadow, and font in every component is driven by a single set of CSS custom properties. Override them globally, per-instance, or via the Tailwind plugin.
+Every colour, radius, shadow, and font in every component is driven by CSS custom properties. Override them globally, per-instance, or via the Tailwind plugin.
 
 ```css
-/* Global override — affects all instances */
+/* Global — affects all instances */
 .pdf-sign-root {
   --psign-primary: #dc2626;
   --psign-primary-hover: #b91c1c;
   --psign-radius: 2px;
-  --psign-font-ui: 'Georgia', serif;
 }
 ```
 
@@ -218,7 +220,7 @@ const { state, fields, canUndo, addField, buildTemplate } = usePdfSign({
   mode: 'prepare',
   pdf: myFile,
 })
-// State is bridged via useSyncExternalStore — concurrent-rendering safe
+// State bridged via useSyncExternalStore — concurrent-rendering safe
 ```
 
 ### Angular
@@ -232,7 +234,7 @@ export class MyComponent implements OnInit {
 
   ngOnInit() {
     this.svc.initialise({ mode: 'prepare', pdf: this.myFile })
-    // All state lives in Angular signals: svc.fields(), svc.state(), etc.
+    // All state lives in Angular signals: svc.fields(), svc.state(), …
   }
 }
 ```
@@ -271,17 +273,32 @@ PdfExporter         ← flattens fields into the PDF via pdf-lib
 
 ## Development
 
+### Package manager note
+
+> **TL;DR:** Use **pnpm** to develop this monorepo. Consumers of the published packages can use any package manager.
+
+This monorepo uses [pnpm workspaces](https://pnpm.io/workspaces) for development. Three things tie it to pnpm at dev time:
+
+1. **`pnpm-workspace.yaml`** — the workspace definition (npm/yarn/bun use the `workspaces` field in `package.json` instead, which is also present)
+2. **`workspace:*` protocol** in internal `devDependencies` — pnpm resolves this natively. Changesets automatically rewrites these to real version numbers on publish, so consumers never see `workspace:*`
+3. **pnpm filter syntax** in scripts (`pnpm --filter`, `pnpm -r`) — used in all monorepo orchestration commands
+
+Once published to npm, the individual packages (`@pdf-sign/vue`, etc.) are standard ESM/CJS bundles with no pnpm requirement whatsoever. Consumers install and use them with **npm, yarn, bun, or pnpm** identically.
+
 ### Prerequisites
 
-- Node.js ≥ 18
-- pnpm ≥ 9
+| Tool | Minimum version |
+|------|----------------|
+| Node.js | 18.0.0 |
+| pnpm | 9.0.0 |
 
 ```bash
-# Clone
+# Install pnpm if you don't have it
+npm install -g pnpm
+
+# Clone and bootstrap
 git clone https://github.com/code-by-nanthu/pdf-sign.git
 cd pdf-sign
-
-# Install all workspace dependencies
 pnpm install
 
 # Build every package
@@ -294,58 +311,60 @@ pnpm test
 pnpm docs
 ```
 
-### Per-package scripts
+### Per-package commands
 
 ```bash
-# Build a single package
+# Build individual packages
 pnpm build:core
 pnpm build:vue
 pnpm build:react
 pnpm build:angular
 pnpm build:plugin
 
-# Typecheck all packages
+# Typecheck all packages (zero errors required)
 pnpm typecheck
 
-# Watch mode for core
+# Watch mode while developing core
 pnpm --filter @pdf-sign/core dev
 ```
 
-### Project structure conventions
+### Project conventions
 
 - All TypeScript is compiled in **strict mode** with `exactOptionalPropertyTypes: true`
-- Core has **zero framework imports** — it can be used in Node.js (SSR template validation), the browser, and any test environment
+- `@pdf-sign/core` has **zero framework imports** — works in Node.js (SSR), browser, and test environments equally
 - Components use **CSS custom properties exclusively** — no hardcoded colour utilities
-- Tests live alongside source code in `__tests__/` directories
+- Tests live alongside source in `__tests__/` directories — new behaviour in core requires a test
 
 ---
 
 ## Contributing
 
 1. Fork and create a feature branch
-2. Make your changes, add tests for any new behaviour in `@pdf-sign/core`
+2. Make your changes; add tests in `@pdf-sign/core` for any new behaviour
 3. Run `pnpm build && pnpm test` — all 220 tests must pass
 4. Run `pnpm typecheck` — zero TypeScript errors across all packages
-5. Open a pull request
+5. Open a pull request with a clear description of _what_ changed and _why_
 
-For significant changes, please open an issue first to discuss the design.
+For significant changes, open an issue first to align on the design.
 
 ---
 
 ## Releasing (maintainers)
 
-This repo uses [Changesets](https://github.com/changesets/changesets) for versioning.
+This repo uses [Changesets](https://github.com/changesets/changesets) for versioning and changelog generation.
 
 ```bash
-# Record a change
+# 1. Record a change (interactive prompt)
 pnpm changeset
 
-# Bump versions
+# 2. Bump versions + update changelogs
 pnpm version-packages
 
-# Publish to npm
+# 3. Build + publish all packages to npm
 pnpm release
 ```
+
+Changesets automatically rewrites all `workspace:*` dependency entries to real semver ranges before publish, so the packages on npm have no pnpm-specific artifacts.
 
 ---
 
@@ -356,6 +375,6 @@ MIT — see [LICENSE](LICENSE) for details.
 ---
 
 <p align="center">
-  Built with <a href="https://pdfjs.express">pdf.js</a>, <a href="https://pdf-lib.js.org">pdf-lib</a>, and a lot of pointer events.<br>
+  Built with <a href="https://mozilla.github.io/pdf.js/">pdf.js</a>, <a href="https://pdf-lib.js.org">pdf-lib</a>, and the Pointer Events API.<br>
   Made by <a href="https://github.com/code-by-nanthu">code-by-nanthu</a>.
 </p>
